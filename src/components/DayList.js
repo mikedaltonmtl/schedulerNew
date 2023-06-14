@@ -9,6 +9,7 @@ export default function DayList({ days, day, setDay }) {
       name={ item.name }
       spots={ item.spots }
       selected={ day === item.name }
+      setDay={ setDay }
     />
   });
 
