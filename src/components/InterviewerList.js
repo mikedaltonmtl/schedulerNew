@@ -8,11 +8,10 @@ export default function InterviewerList({ interviewers, interviewer, setIntervie
   const interviewerList = interviewers.map(interviewerItem => {
     return <InterviewerListItem
       key={ interviewerItem.id }
-      id={ interviewerItem.id }
       name={ interviewerItem.name }
       avatar={ interviewerItem.avatar }
       selected={ interviewer === interviewerItem.id }
-      setInterviewer={ setInterviewer }
+      setInterviewer={ () => setInterviewer(interviewerItem.id) }
     />
   });
 
