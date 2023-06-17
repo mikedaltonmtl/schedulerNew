@@ -5,6 +5,6 @@ import "components/Appointment/styles.scss";
 export default function Appointment(props) {
 
   return (
-    <article className="appointment">Delete me!</article>
+    <article className="appointment"></article>
   );
 }
