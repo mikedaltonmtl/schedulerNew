@@ -3,7 +3,7 @@ import "components/InterviewerListItem.scss";
 import classNames from "classnames";
 
 
-export default function DayListItem({ name, avatar, selected, setInterviewer }) {
+export default function InterviewerListItem({ name, avatar, selected, setInterviewer }) {
 
   let interviewerClass = classNames("interviewers__item", { "interviewers__item--selected": selected });
 
