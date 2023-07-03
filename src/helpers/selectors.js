@@ -12,5 +12,11 @@ export function getAppointmentsForDay(state, day) {
         return appointment;
       }
     }
+    return false;
   });
-}
+};
+
+export function getInterview(state, interview) {
+  // replace interview id with interview object
+  return interview ? { ...interview, interviewer: state.interviewers[interview.interviewer] } : null;
+};
