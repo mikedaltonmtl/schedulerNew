@@ -3,7 +3,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "helpers/selectors";
 
 /*
 const appointmentsArray = {
@@ -63,15 +63,31 @@ export default function Application(props) {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);
+
+  const bookInterview = function(id, interview) {
+    // Make copy of our appointment object & add the new interview object
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    // Update the appointments array with the appointment we just created
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    // Update state with this new appointments array
+    setState(prev => ({ ...prev, appointments }));
+  };
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const schedule = dailyAppointments.map(appointment => {
     
     const interview = getInterview(state, appointment.interview);
+    const interviewers = getInterviewersForDay(state, state.day);
   
     return (
       <Appointment
@@ -79,6 +95,8 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={interviewers}
+        bookInterview={bookInterview}
       />
     );
   });
