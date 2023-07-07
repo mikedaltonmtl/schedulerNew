@@ -8,7 +8,7 @@ export default function Status({ message }) {
       <img
         className="appointment__status-image"
         src="images/status.png"
-        alt="Loading"
+        alt={ message }
       />
       <h1 className="text--semi-bold">{ message }</h1>
     </main>

@@ -62,7 +62,7 @@ export default function Application(props) {
       axios.get('/api/days'),
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
-    ]).then((all) => {
+    ]).then(all => {
       setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);
@@ -78,8 +78,36 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
+    // Update the database
+    return axios.put(`/api/appointments/${id}`, {
+      interview: interview
+    })
     // Update state with this new appointments array
-    setState(prev => ({ ...prev, appointments }));
+    .then(() => {
+      setState(prev => ({ ...prev, appointments }));
+    });
+  };
+
+  // To cancel an interview, we need to set the interview object to null
+  const cancelInterview = function(id) {
+    // Make copy of our appointment object & add set the interview object to null
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    // Update the appointments array with the cancelled appointment
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    // Update the database
+    return axios.delete(`/api/appointments/${id}`, {
+      interview: null
+    })
+    // Update state with this new appointments array
+    .then(() => {
+      setState(prev => ({ ...prev, appointments }));
+    });
   };
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
@@ -97,6 +125,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
