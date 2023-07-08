@@ -33,7 +33,8 @@ export default function useApplicationData() {
       return updatedAppointments[appointmentId].interview === null
     }).length;
 
-    return state.days.map(day => {
+    const updatedDays = [ ...state.days ];
+    return updatedDays.map(day => {
       if (day.name === selectedDay.name) {
         day.spots = nbSpots;
       }
