@@ -30,8 +30,16 @@ export default function useApplicationData() {
     const selectedDay = Object.values(state.days).find(day => day.name === state.day);
 
     const nbSpots = selectedDay.appointments.filter(appointmentId => {
-      return updatedAppointments[appointmentId].interview === null
+      return updatedAppointments[appointmentId].interview === null;
     }).length;
+
+
+    // Just for fun..... the reduce method!
+    const reducerSpots = selectedDay.appointments.reduce((spots, appointmentId) => {
+      return updatedAppointments[appointmentId].interview === null ? spots + 1 : spots;
+    }, 0);
+    console.log('reducerSpots', reducerSpots);
+
 
     const updatedDays = [ ...state.days ];
     return updatedDays.map(day => {
