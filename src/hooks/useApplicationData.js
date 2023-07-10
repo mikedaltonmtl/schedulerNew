@@ -35,10 +35,10 @@ export default function useApplicationData() {
 
 
     // Just for fun..... the reduce method!
-    const reducerSpots = selectedDay.appointments.reduce((spots, appointmentId) => {
-      return updatedAppointments[appointmentId].interview === null ? spots + 1 : spots;
-    }, 0);
-    console.log('reducerSpots', reducerSpots);
+    // const reducerSpots = selectedDay.appointments.reduce((spots, appointmentId) => {
+    //   return updatedAppointments[appointmentId].interview === null ? spots + 1 : spots;
+    // }, 0);
+    // console.log('reducerSpots', reducerSpots);
 
 
     const updatedDays = [ ...state.days ];
