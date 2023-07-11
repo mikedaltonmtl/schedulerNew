@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+// Replace api functionality with static data
 import apiData from "__mocks__/replaceApi";
 
 export default function useApplicationData() {
@@ -61,13 +62,20 @@ export default function useApplicationData() {
     const appointment = { ...state.appointments[id], interview: { ...interview } };
     // Update the appointments array with the appointment we just created
     const appointments = { ...state.appointments, [id]: appointment };
-    // Update the database
-    return axios.put(`/api/appointments/${id}`, {
-      interview: interview
-    })
-    .then(() => {
-      // Avoid stale state, pass updated appointments to update the day
-      setState(prev => ({ ...prev, appointments, days: updateDaySpots(appointments)}));
+    // // Update the database
+    // return axios.put(`/api/appointments/${id}`, {
+    //   interview: interview
+    // })
+    // .then(() => {
+    //   // Avoid stale state, pass updated appointments to update the day
+    //   setState(prev => ({ ...prev, appointments, days: updateDaySpots(appointments)}));
+    // });
+
+    // Static site, no database
+    setState(prev => ({ ...prev, appointments, days: updateDaySpots(appointments)}));
+    // Fake delay
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, 1000);
     });
   };
 
@@ -78,13 +86,21 @@ export default function useApplicationData() {
     // Update the appointments array with the cancelled appointment
     const appointments = { ...state.appointments, [id]: appointment };
     // Update the database
-    return axios.delete(`/api/appointments/${id}`, {
-      interview: null
-    })
-    // Update state with this new appointments array
-    .then(() => {
-      setState(prev => ({ ...prev, appointments, days: updateDaySpots(appointments)}));
+    // return axios.delete(`/api/appointments/${id}`, {
+    //   interview: null
+    // })
+    // // Update state with this new appointments array
+    // .then(() => {
+    //   setState(prev => ({ ...prev, appointments, days: updateDaySpots(appointments)}));
+    // });
+
+    // Static site, no database
+    setState(prev => ({ ...prev, appointments, days: updateDaySpots(appointments)}));
+    // Fake delay
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, 1000);
     });
+    
   };
 
   return { state, setDay, bookInterview, cancelInterview };
